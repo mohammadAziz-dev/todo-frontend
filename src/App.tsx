@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import TodoList from "./components/TodoList.tsx";
 import TodoForm from "./components/TodoForm.tsx";
-import { createTodo, getTodos } from "./api/todoApi.ts";
+import { createTodo, getTodos, updateTodo } from "./api/todoApi.ts";
 import type { Todo } from "./types/Todo.ts";
 
 function App() {
@@ -44,6 +44,16 @@ function App() {
     setTodos((currentTodos) => [...currentTodos, createdTodo]);
   }
 
+  async function handleUpdateTodo(todo: Todo) {
+    const updatedTodo = await updateTodo(todo);
+
+    setTodos((currentTodos) =>
+      currentTodos.map((currentTodo) =>
+        currentTodo.id === updatedTodo.id ? updatedTodo : currentTodo,
+      ),
+    );
+  }
+
   return (
     <main>
       <h1>Todo App</h1>
@@ -51,7 +61,9 @@ function App() {
 
       {isLoading && <p>Loading todos...</p>}
       {error && <p role="alert">{error}</p>}
-      {!isLoading && !error && <TodoList todos={todos} />}
+      {!isLoading && !error && (
+        <TodoList todos={todos} onUpdateTodo={handleUpdateTodo} />
+      )}
     </main>
   );
 }
