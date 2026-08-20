@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import TodoList from "./components/TodoList.tsx";
-import { getTodos } from "./api/todoApi.ts";
+import TodoForm from "./components/TodoForm.tsx";
+import { createTodo, getTodos } from "./api/todoApi.ts";
 import type { Todo } from "./types/Todo.ts";
 
 function App() {
@@ -34,9 +35,19 @@ function App() {
     };
   }, []);
 
+  async function handleAddTodo(description: string) {
+    const createdTodo = await createTodo({
+      description,
+      status: "OPEN",
+    });
+
+    setTodos((currentTodos) => [...currentTodos, createdTodo]);
+  }
+
   return (
     <main>
       <h1>Todo App</h1>
+      <TodoForm onAddTodo={handleAddTodo} />
 
       {isLoading && <p>Loading todos...</p>}
       {error && <p role="alert">{error}</p>}
