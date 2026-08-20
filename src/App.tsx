@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import TodoList from "./components/TodoList.tsx";
 import TodoForm from "./components/TodoForm.tsx";
-import { createTodo, getTodos, updateTodo } from "./api/todoApi.ts";
+import { createTodo, deleteTodo, getTodos, updateTodo } from "./api/todoApi.ts";
 import type { Todo } from "./types/Todo.ts";
 
 function App() {
@@ -54,6 +54,12 @@ function App() {
     );
   }
 
+  async function handleDeleteTodo(id: string) {
+    await deleteTodo(id);
+
+    setTodos((currentTodos) => currentTodos.filter((todo) => todo.id !== id));
+  }
+
   return (
     <main>
       <h1>Todo App</h1>
@@ -62,7 +68,11 @@ function App() {
       {isLoading && <p>Loading todos...</p>}
       {error && <p role="alert">{error}</p>}
       {!isLoading && !error && (
-        <TodoList todos={todos} onUpdateTodo={handleUpdateTodo} />
+        <TodoList
+          todos={todos}
+          onUpdateTodo={handleUpdateTodo}
+          onDeleteTodo={handleDeleteTodo}
+        />
       )}
     </main>
   );
