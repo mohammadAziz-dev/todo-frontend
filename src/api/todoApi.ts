@@ -20,3 +20,7 @@ export async function updateTodo(todo: Todo): Promise<Todo> {
 
   return response.data;
 }
+
+export async function deleteTodo(id: string): Promise<void> {
+  await axios.delete(`${TODO_API_URL}/${id}`);
+}
