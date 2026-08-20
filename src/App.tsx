@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import TodoList from "./components/TodoList.tsx";
 import TodoForm from "./components/TodoForm.tsx";
 import { createTodo, deleteTodo, getTodos, updateTodo } from "./api/todoApi.ts";
 import type { Todo } from "./types/Todo.ts";
+import KanbanBoard from "./components/KanbanBoard.tsx";
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -68,7 +68,7 @@ function App() {
       {isLoading && <p>Loading todos...</p>}
       {error && <p role="alert">{error}</p>}
       {!isLoading && !error && (
-        <TodoList
+        <KanbanBoard
           todos={todos}
           onUpdateTodo={handleUpdateTodo}
           onDeleteTodo={handleDeleteTodo}
