@@ -3,9 +3,10 @@ import TodoItem from "./TodoItem.tsx";
 
 type TodoListProps = {
   todos: Todo[];
+  onUpdateTodo: (todo: Todo) => Promise<void>;
 };
 
-export default function TodoList({ todos }: TodoListProps) {
+export default function TodoList({ todos, onUpdateTodo }: TodoListProps) {
   if (todos.length === 0) {
     return <p>No todos available.</p>;
   }
@@ -13,7 +14,7 @@ export default function TodoList({ todos }: TodoListProps) {
   return (
     <ul>
       {todos.map((todo) => (
-        <TodoItem key={todo.id} todo={todo} />
+        <TodoItem key={todo.id} todo={todo} onUpdateTodo={onUpdateTodo} />
       ))}
     </ul>
   );

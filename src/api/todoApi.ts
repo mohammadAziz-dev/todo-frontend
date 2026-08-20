@@ -14,3 +14,9 @@ export async function createTodo(todo: CreateTodo): Promise<Todo> {
 
   return response.data;
 }
+
+export async function updateTodo(todo: Todo): Promise<Todo> {
+  const response = await axios.put<Todo>(`${TODO_API_URL}/${todo.id}`, todo);
+
+  return response.data;
+}
