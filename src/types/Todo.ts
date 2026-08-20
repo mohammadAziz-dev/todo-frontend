@@ -5,3 +5,5 @@ export type Todo = {
   description: string;
   status: TodoStatus;
 };
+
+export type CreateTodo = Omit<Todo, "id">;
