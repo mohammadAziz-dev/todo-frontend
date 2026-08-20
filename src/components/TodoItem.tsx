@@ -67,33 +67,47 @@ export default function TodoItem({
   }
 
   return (
-    <li>
-      <p>{todo.description}</p>
+    <li className="todo-card">
+      <p className="todo-card__description">{todo.description}</p>
 
-      <label htmlFor={`todo-status-${todo.id}`}>Status</label>
-      <select
-        id={`todo-status-${todo.id}`}
-        value={todo.status}
-        onChange={handleStatusChange}
-        disabled={isUpdating || isDeleting}
-      >
-        {Object.entries(statusLabels).map(([status, label]) => (
-          <option key={status} value={status}>
-            {label}
-          </option>
-        ))}
-      </select>
+      <div className="todo-card__actions">
+        <div className="todo-card__status">
+          <label htmlFor={`todo-status-${todo.id}`}>Status</label>
+          <select
+            id={`todo-status-${todo.id}`}
+            value={todo.status}
+            onChange={handleStatusChange}
+            disabled={isUpdating || isDeleting}
+          >
+            {Object.entries(statusLabels).map(([status, label]) => (
+              <option key={status} value={status}>
+                {label}
+              </option>
+            ))}
+          </select>
+        </div>
 
-      <button
-        type="button"
-        onClick={handleDelete}
-        disabled={isUpdating || isDeleting}
-      >
-        {isDeleting ? "Deleting..." : "Delete"}
-      </button>
+        <button
+          className="button-delete"
+          type="button"
+          onClick={handleDelete}
+          disabled={isUpdating || isDeleting}
+        >
+          {isDeleting ? "Deleting..." : "Delete"}
+        </button>
+      </div>
 
-      {isUpdating && <span> Updating...</span>}
-      {error && <p role="alert">{error}</p>}
+      {isUpdating && (
+        <p className="feedback" aria-live="polite">
+          Updating...
+        </p>
+      )}
+
+      {error && (
+        <p className="feedback feedback--error" role="alert">
+          {error}
+        </p>
+      )}
     </li>
   );
 }
