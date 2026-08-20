@@ -3,6 +3,7 @@ import TodoForm from "./components/TodoForm.tsx";
 import { createTodo, deleteTodo, getTodos, updateTodo } from "./api/todoApi.ts";
 import type { Todo } from "./types/Todo.ts";
 import KanbanBoard from "./components/KanbanBoard.tsx";
+import "./App.css";
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -61,12 +62,24 @@ function App() {
   }
 
   return (
-    <main>
-      <h1>Todo App</h1>
+    <main className="app">
+      <header className="app-header">
+        <p className="app-header__eyebrow">Personal task workspace</p>
+        <h1>Todo Board</h1>
+        <p className="app-header__description">
+          Organize tasks and track their progress.
+        </p>
+      </header>
+
       <TodoForm onAddTodo={handleAddTodo} />
 
-      {isLoading && <p>Loading todos...</p>}
-      {error && <p role="alert">{error}</p>}
+      {isLoading && <p className="feedback">Loading todos...</p>}
+      {error && (
+        <p className="feedback feedback--error" role="alert">
+          {error}
+        </p>
+      )}
+
       {!isLoading && !error && (
         <KanbanBoard
           todos={todos}

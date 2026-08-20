@@ -34,23 +34,29 @@ export default function TodoForm({ onAddTodo }: TodoFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="todo-description">New todo</label>
+    <form className="todo-form" onSubmit={handleSubmit}>
+      <div className="todo-form__field">
+        <label htmlFor="todo-description">New todo</label>
 
-      <input
-        id="todo-description"
-        type="text"
-        value={description}
-        onChange={(event) => setDescription(event.target.value)}
-        placeholder="Enter a todo"
-        disabled={isSubmitting}
-      />
+        <input
+          id="todo-description"
+          type="text"
+          value={description}
+          onChange={(event) => setDescription(event.target.value)}
+          placeholder="What needs to be done?"
+          disabled={isSubmitting}
+        />
+      </div>
 
       <button type="submit" disabled={isSubmitting}>
         {isSubmitting ? "Adding..." : "Add todo"}
       </button>
 
-      {error && <p role="alert">{error}</p>}
+      {error && (
+        <p className="feedback feedback--error" role="alert">
+          {error}
+        </p>
+      )}
     </form>
   );
 }

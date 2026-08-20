@@ -1,4 +1,4 @@
-import type { Todo } from "../types/Todo.ts";
+import type { Todo, TodoStatus } from "../types/Todo.ts";
 import TodoItem from "./TodoItem.tsx";
 
 type KanbanColumnProps = {
@@ -6,6 +6,7 @@ type KanbanColumnProps = {
   todos: Todo[];
   onUpdateTodo: (todo: Todo) => Promise<void>;
   onDeleteTodo: (id: string) => Promise<void>;
+  status: TodoStatus;
 };
 
 export default function KanbanColumn({
@@ -13,17 +14,19 @@ export default function KanbanColumn({
   todos,
   onUpdateTodo,
   onDeleteTodo,
+  status,
 }: KanbanColumnProps) {
   return (
-    <section>
-      <h2>
-        {title} ({todos.length})
-      </h2>
+    <section className="kanban-column" data-status={status}>
+      <header className="kanban-column__header">
+        <h2>{title}</h2>
+        <span aria-label={`${todos.length} todos`}>{todos.length}</span>
+      </header>
 
       {todos.length === 0 ? (
-        <p>No todos in this column.</p>
+        <p className="kanban-column__empty">No todos in this column.</p>
       ) : (
-        <ul aria-label={`${title} todos`}>
+        <ul className="kanban-column__list" aria-label={`${title} todos`}>
           {todos.map((todo) => (
             <TodoItem
               key={todo.id}

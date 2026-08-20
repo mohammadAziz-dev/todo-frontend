@@ -19,11 +19,12 @@ export default function KanbanBoard({
   onDeleteTodo,
 }: KanbanBoardProps) {
   return (
-    <div>
+    <div className="kanban-board">
       {columns.map((column) => (
         <KanbanColumn
           key={column.status}
           title={column.title}
+          status={column.status}
           todos={todos.filter((todo) => todo.status === column.status)}
           onUpdateTodo={onUpdateTodo}
           onDeleteTodo={onDeleteTodo}
